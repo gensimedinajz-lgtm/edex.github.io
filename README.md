@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RESINA.3D — Figuras Artesanales</title>
+<title>EDEX 3D — Figuras Artesanales</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --cream: #f5f0e8;
-    --dark: #0d0b08;
-    --amber: #c8832a;
-    --amber-light: #e8a94a;
-    --rust: #8b3a1a;
-    --resin-blue: #1a3a5c;
-    --resin-teal: #2a7a6a;
-    --glass: rgba(245,240,232,0.06);
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-serif: 'Cormorant Garamond', serif;
-    --font-mono: 'Space Mono', monospace;
-  }
+    :root {
+        --cream: #f5f0e8;
+        --dark: #0d0b08;
+        --amber: #c8832a;
+        --amber-light: #e8a94a;
+        --rust: #8b3a1a;
+        --resin-blue: #1a3a5c;
+        --resin-teal: #2a7a6a;
+        --glass: rgba(245,240,232,0.06);
+        --font-display: 'Bebas Neue', sans-serif;
+        --font-serif: 'Cormorant Garamond', serif;
+        --font-mono: 'Space Mono', monospace;
+    }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -147,7 +147,7 @@
   }
   .hero-sub {
     font-family: var(--font-serif);
-    font-style: italic;
+    /*font-style: italic;*/
     font-size: clamp(18px, 2.5vw, 28px);
     color: rgba(245,240,232,0.6);
     margin-top: 24px;
@@ -264,22 +264,26 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 2px;
   }
-  .product-card {
-    position: relative; overflow: hidden;
-    background: #111009;
-    aspect-ratio: 3/4;
-    cursor: none;
-  }
+    .product-card {
+        position: relative;
+        overflow: hidden;
+        /*background: #111009;*/
+        background: #000000;
+        aspect-ratio: 3/4;
+        cursor: none;
+    }
   .product-card:first-child { aspect-ratio: auto; grid-row: span 2; }
   .product-img {
-    width: 100%; height: 100%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
-    filter: saturate(0.8) brightness(0.85);
+    display: block;
   }
   .product-card:hover .product-img {
-    transform: scale(1.08);
-    filter: saturate(1) brightness(1);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
   .product-overlay {
     position: absolute; inset: 0;
@@ -823,6 +827,68 @@
     body { cursor: auto; }
     #cursor, #cursor-ring { display: none; }
   }
+
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  background: rgba(13,11,8,0.95);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.image-viewer.active {
+  display: flex;
+}
+
+#viewer-img {
+  max-width: 90%;
+  max-height: 80%;
+  object-fit: contain;
+  margin-bottom: 30px;
+}
+
+.viewer-close {
+  position: absolute;
+  top: 30px;
+  right: 40px;
+  font-size: 32px;
+  cursor: pointer;
+  color: var(--cream);
+}
+
+#viewer-add {
+  cursor: none;
+}
+
+
+    .hero-logo {
+        width: clamp(250px, 40vw, 520px);
+        filter: drop-shadow(0 0 20px rgba(255,140,0,0.4)) drop-shadow(0 0 40px rgba(255,140,0,0.2));
+        opacity: 0.95;
+        mix-blend-mode: screen;
+        animation: fadeUp 1s 0.5s forwards;
+    }
+
+    /* Ajustes individuales de imágenes */
+    .contain {
+        object-fit: contain !important;
+    }
+
+    .object-top {
+        object-position: top;
+    }
+
+    .object-center {
+        object-position: center;
+    }
+
+    .object-bottom {
+        object-position: bottom;
+    }
+
 </style>
 </head>
 <body>
@@ -842,7 +908,7 @@
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="nav-logo">RESINA<span>.3D</span></a>
+  <a href="#" class="nav-logo">EDEX<span>.3D</span></a>
   <div class="nav-links">
     <a href="#productos">Colección</a>
     <a href="#proceso">Proceso</a>
@@ -858,7 +924,9 @@
 <!-- HERO -->
 <section id="hero">
   <div class="hero-eyebrow">Artesanía Digital · Resina UV · Impresión 3D</div>
-  <h1 class="hero-title">RESINA<br>.3D</h1>
+  
+<img src="logo.png" class="hero-logo" alt="EDEX 3D Logo">
+
   <p class="hero-sub">Figuras artesanales creadas con tecnología<br>de impresión 3D en resina fotopolimérica</p>
   <div class="hero-cta">
     <a href="#productos" class="btn-primary">Ver Colección</a>
@@ -898,55 +966,120 @@
     <a href="#tienda" class="section-link">Ver todas →</a>
   </div>
   <div class="products-grid reveal">
-    <div class="product-card" onclick="addToCart('Dragón Ancestral', 2800)">
-      <div class="product-placeholder">🐉</div>
-      <div class="product-overlay">
-        <div class="product-tag">Edición Limitada · 12/50</div>
-        <div class="product-name">Dragón Ancestral</div>
-        <div class="product-price">RD$2,800</div>
-        <div class="product-add">
-          <button class="btn-add">+ Añadir</button>
-        </div>
+      <!-- PRODUCTO: Dragón Ancestral — imágenes: frente y reverso de la figura -->
+      <div class="product-card" onclick="addToCart('Dragón Ancestral', 2800)">
+          <img src="okarun.png" class="product-img" onclick="openViewer('okarun.png','Dragón Ancestral',2800)" />
+          <div class="product-overlay">
+              <div class="product-tag">Edición Limitada · 12/50</div>
+              <div class="product-name">Dragón Ancestral</div>
+              <div class="product-price">RD$2,800</div>
+              <div class="product-add">
+                  <button class="btn-add">+ Añadir</button>
+              </div>
+          </div>
       </div>
-    </div>
-    <div class="product-card" onclick="addToCart('Samurái del Viento', 1900)">
-      <div class="product-placeholder">⚔️</div>
-      <div class="product-overlay">
-        <div class="product-tag">Best Seller</div>
-        <div class="product-name">Samurái del Viento</div>
-        <div class="product-price">RD$1,900</div>
-        <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+      <div class="product-card" onclick="addToCart('Samurái del Viento', 1900)">
+          <img src="samurai.png" class="product-img contain" onclick="openViewer('samurai.png','Samurái del Viento',1900)" />
+          <div class="product-overlay">
+              <div class="product-tag">Best Seller</div>
+              <div class="product-name">Samurái del Viento</div>
+              <div class="product-price">RD$1,900</div>
+              <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+          </div>
       </div>
-    </div>
-    <div class="product-card" onclick="addToCart('Kitsune Celestial', 2200)">
-      <div class="product-placeholder">🦊</div>
-      <div class="product-overlay">
-        <div class="product-tag">Nuevo</div>
-        <div class="product-name">Kitsune Celestial</div>
-        <div class="product-price">RD$2,200</div>
-        <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+      <div class="product-card" onclick="addToCart('Kitsune Celestial', 2200)">
+          <img src="geto.png" class="product-img contain" onclick="openViewer('geto.png','Kitsune Celestial',2200)" />
+          <div class="product-overlay">
+              <div class="product-tag">Nuevo</div>
+              <div class="product-name">Kitsune Celestial</div>
+              <div class="product-price">RD$2,200</div>
+              <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+          </div>
       </div>
-    </div>
-    <div class="product-card" onclick="addToCart('Guerrera de Cristal', 1600)">
-      <div class="product-placeholder">🧊</div>
-      <div class="product-overlay">
-        <div class="product-tag">Popular</div>
-        <div class="product-name">Guerrera de Cristal</div>
-        <div class="product-price">RD$1,600</div>
-        <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+      <div class="product-card" onclick="addToCart('Guerrera de Cristal', 1600)">
+          <img src="nobara.png" class="product-img" onclick="openViewer('nobara.png','Guerrera de Cristal',1600)" />
+          <div class="product-overlay">
+              <div class="product-tag">Popular</div>
+              <div class="product-name">Guerrera de Cristal</div>
+              <div class="product-price">RD$1,600</div>
+              <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+          </div>
       </div>
-    </div>
-    <div class="product-card" onclick="addToCart('Lobo Lunar', 3100)">
-      <div class="product-placeholder">🐺</div>
-      <div class="product-overlay">
-        <div class="product-tag">Premium · Ed. Especial</div>
-        <div class="product-name">Lobo Lunar</div>
-        <div class="product-price">RD$3,100</div>
-        <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+      <div class="product-card" onclick="addToCart('Lobo Lunar', 3100)">
+          <img src="jojo.png" class="product-img contain" onclick="openViewer('soporte_pc.png','Lobo Lunar',3100)" />
+          <div class="product-overlay">
+              <div class="product-tag">Premium · Ed. Especial</div>
+              <div class="product-name">Lobo Lunar</div>
+              <div class="product-price">RD$3,100</div>
+              <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+          </div>
       </div>
-    </div>
   </div>
 </section>
+
+    <!--prueba de agregar una nueva seccion===========================================-->
+
+<section id="productos">
+    <div class="section-header reveal">
+        <div>
+            <div class="section-eyebrow">Colección Principal</div>
+            <h2 class="section-title">MODELOS<br>RECIENTES</h2>
+        </div>
+        <a href="#tienda" class="section-link">Ver todas →</a>
+    </div>
+    <div class="products-grid reveal">
+        <!-- PRODUCTO: Dragón Ancestral — imágenes: frente y reverso de la figura -->
+        <div class="product-card" onclick="addToCart('Dragón Ancestral', 2800)">
+            <img src="mesa.png" class="product-img contain" onclick="openViewer('okarun.png','Dragón Ancestral',2800)" />
+            <div class="product-overlay">
+                <div class="product-tag">Edición Limitada · 12/50</div>
+                <div class="product-name">Dragón Ancestral</div>
+                <div class="product-price">RD$2,800</div>
+                <div class="product-add">
+                    <button class="btn-add">+ Añadir</button>
+                </div>
+            </div>
+        </div>
+        <div class="product-card" onclick="addToCart('Samurái del Viento', 1900)">
+            <img src="samurai.png" class="product-img" onclick="openViewer('samurai.png','Samurái del Viento',1900)" />
+            <div class="product-overlay">
+                <div class="product-tag">Best Seller</div>
+                <div class="product-name">Samurái del Viento</div>
+                <div class="product-price">RD$1,900</div>
+                <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+            </div>
+        </div>
+        <div class="product-card" onclick="addToCart('Kitsune Celestial', 2200)">
+            <img src="geto.png" class="product-img" onclick="openViewer('geto.png','Kitsune Celestial',2200)" />
+            <div class="product-overlay">
+                <div class="product-tag">Nuevo</div>
+                <div class="product-name">Kitsune Celestial</div>
+                <div class="product-price">RD$2,200</div>
+                <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+            </div>
+        </div>
+        <div class="product-card" onclick="addToCart('Guerrera de Cristal', 1600)">
+            <img src="nobara.png" class="product-img" onclick="openViewer('nobara.png','Guerrera de Cristal',1600)" />
+            <div class="product-overlay">
+                <div class="product-tag">Popular</div>
+                <div class="product-name">Guerrera de Cristal</div>
+                <div class="product-price">RD$1,600</div>
+                <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+            </div>
+        </div>
+        <div class="product-card" onclick="addToCart('Lobo Lunar', 3100)">
+            <img src="soporte_pc.png" class="product-img" onclick="openViewer('soporte_pc.png','Lobo Lunar',3100)" />
+            <div class="product-overlay">
+                <div class="product-tag">Premium · Ed. Especial</div>
+                <div class="product-name">Lobo Lunar</div>
+                <div class="product-price">RD$3,100</div>
+                <div class="product-add"><button class="btn-add">+ Añadir</button></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--=======prueba fin===============-->
 
 <!-- PROCESS -->
 <section id="proceso">
@@ -988,17 +1121,8 @@
     </div>
     <a href="#galeria" class="btn-secondary">Ver Galería del Proceso →</a>
   </div>
-  <div class="video-container reveal">
-    <div class="video-placeholder" onclick="playVideo(this)">
-      <div class="video-badge">▶ EN VIVO</div>
-      <div class="play-btn"></div>
-      <div class="video-label">Proceso de creación — Ver video</div>
-    </div>
-    <!-- Para usar video real, reemplaza el div.video-placeholder con: -->
-    <!-- <video class="video-frame" autoplay muted loop playsinline>
-      <source src="tu-video.mp4" type="video/mp4">
-    </video> -->
-  </div>
+  <video class="video-frame" autoplay muted loop playsinline>
+      <source src="impresora.mp4" type="video/mp4">
 </section>
 
 <!-- GALLERY -->
@@ -1049,7 +1173,7 @@
     </div>
     <div class="testimonial">
       <div class="stars">★★★★★</div>
-      <p class="testimonial-text">Increíble calidad de resina. He comprado en otras tiendas y ninguna tiene este nivel de precisión. RESINA.3D es mi única opción de ahora en adelante.</p>
+      <p class="testimonial-text">Increíble calidad de resina. He comprado en otras tiendas y ninguna tiene este nivel de precisión. EDEX 3D es mi única opción de ahora en adelante.</p>
       <div class="testimonial-author">— Javier R., San Pedro</div>
     </div>
   </div>
@@ -1065,7 +1189,8 @@
     <div>
       <div class="product-list" id="product-list">
         <div class="product-row">
-          <div class="product-row-img">🐉</div>
+            <!--modificacion de imagen-->
+            <img src="Captura de pantalla 2026-04-04 213959" alt="Dragón Ancestral" style="width:100px; height:100px; object-fit:cover;">
           <div>
             <div class="product-row-name">Dragón Ancestral</div>
             <div class="product-row-sku">SKU-001 · 18cm · Resina UV Premium</div>
@@ -1200,7 +1325,7 @@
 <footer>
   <div class="footer-grid">
     <div class="footer-brand">
-      <a href="#" class="nav-logo">RESINA<span>.3D</span></a>
+      <a href="#" class="nav-logo">EDEX<span>.3D</span></a>
       <p class="footer-desc">Figuras artesanales creadas con pasión, tecnología de vanguardia y resina fotopolimérica de máxima calidad. República Dominicana.</p>
     </div>
     <div class="footer-col">
@@ -1224,7 +1349,7 @@
     <div class="footer-col">
       <h5>Contacto</h5>
       <div class="footer-links">
-        <a href="#">info@resina3d.do</a>
+        <a href="#">info@EDEX 3D.do</a>
         <a href="#">+1 (809) 000-0000</a>
         <a href="#">Santo Domingo, RD</a>
         <a href="#">WhatsApp</a>
@@ -1232,7 +1357,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <div class="footer-copy">© 2025 RESINA.3D — Todos los derechos reservados</div>
+    <div class="footer-copy">© 2025 EDEX 3D — Todos los derechos reservados</div>
     <div class="footer-socials">
       <a href="#" class="social-link">Instagram</a>
       <a href="#" class="social-link">TikTok</a>
@@ -1298,7 +1423,7 @@
             <strong>Concepto:</strong> Tu número de orden
           </div>
         </div>
-        <p style="font-size:14px;color:rgba(245,240,232,0.5);line-height:1.6;">Envía el comprobante a <span style="color:var(--amber);">pagos@resina3d.do</span> y procesaremos tu pedido en 24h.</p>
+        <p style="font-size:14px;color:rgba(245,240,232,0.5);line-height:1.6;">Envía el comprobante a <span style="color:var(--amber);">pagos@EDEX 3D.do</span> y procesaremos tu pedido en 24h.</p>
       </div>
 
       <div id="tab-cash" style="display:none;">
@@ -1371,8 +1496,8 @@ if (gl) {
       float dist = length(uv);
       if (dist > 0.5) discard;
       float alpha = smoothstep(0.5, 0.1, dist) * v_alpha * 0.7;
-      vec3 color1 = vec3(0.784, 0.514, 0.165); // amber
-      vec3 color2 = vec3(0.165, 0.231, 0.361); // blue
+      vec3 color1 = vec3(1.0, 0.55, 0.0);   // naranja vivo
+      vec3 color2 = vec3(1.0, 0.35, 0.0);   // naranja oscuro
       vec3 color = mix(color1, color2, v_alpha);
       gl_FragColor = vec4(color, alpha);
     }
@@ -1626,6 +1751,36 @@ function playVideo(el) {
 
 // Init
 updateSummary();
+
+let currentProduct = null;
+
+function openViewer(img, name, price) {
+  const viewer = document.getElementById('image-viewer');
+  const viewerImg = document.getElementById('viewer-img');
+  const addBtn = document.getElementById('viewer-add');
+
+  viewerImg.src = img;
+  viewer.classList.add('active');
+
+  currentProduct = { name, price };
+
+  addBtn.onclick = () => {
+    addToCart(name, price);
+    closeViewer();
+  };
+}
+
+function closeViewer() {
+  document.getElementById('image-viewer').classList.remove('active');
+}
+
 </script>
+
+<div id="image-viewer" class="image-viewer">
+  <span class="viewer-close" onclick="closeViewer()">✕</span>
+  <img id="viewer-img" src="" alt="Producto">
+  <button id="viewer-add" class="btn-primary">Añadir al carrito</button>
+</div>
+
 </body>
 </html>
